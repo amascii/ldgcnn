@@ -7,7 +7,7 @@ Reference code: https://github.com/WangYueFt/dgcnn
 """
 import argparse
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import socket
 import importlib
 import os
