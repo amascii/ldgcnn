@@ -11,6 +11,7 @@ import tensorflow.compat.v1 as tf
 import socket
 import importlib
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # reduce tf spam
 import sys
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(BASE_DIR)
