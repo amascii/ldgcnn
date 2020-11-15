@@ -7,7 +7,7 @@ Upadted by Yue Wang and Yongbin Sun
 """
 
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 def _variable_on_cpu(name, shape, initializer, use_fp16=False, trainable=True):
   """Helper to create a Variable stored on CPU memory.
@@ -41,7 +41,8 @@ def _variable_with_weight_decay(name, shape, stddev, wd, use_xavier=True):
     Variable Tensor
   """
   if use_xavier:
-    initializer = tf.contrib.layers.xavier_initializer()
+    #initializer = tf.contrib.layers.xavier_initializer()
+    initializer = tf.initializers.glorot_uniform()
   else:
     initializer = tf.truncated_normal_initializer(stddev=stddev)
   var = _variable_on_cpu(name, shape, initializer)
@@ -148,7 +149,7 @@ def conv2d(inputs,
   """
   with tf.variable_scope(scope) as sc:
       kernel_h, kernel_w = kernel_size
-      num_in_channels = inputs.get_shape()[-1].value
+      num_in_channels = inputs.get_shape()[-1]
       kernel_shape = [kernel_h, kernel_w,
                       num_in_channels, num_output_channels]
       kernel = _variable_with_weight_decay('weights',
@@ -335,7 +336,7 @@ def fully_connected(inputs,
     Variable tensor of size B x num_outputs.
   """
   with tf.variable_scope(scope) as sc:
-    num_input_units = inputs.get_shape()[-1].value
+    num_input_units = inputs.get_shape()[-1]
     weights = _variable_with_weight_decay('weights',
                                           shape=[num_input_units, num_outputs],
                                           use_xavier=use_xavier,
@@ -473,7 +474,7 @@ def batch_norm_template(inputs, is_training, scope, moments_dims, bn_decay):
       normed:        batch-normalized maps
   """
   with tf.variable_scope(scope) as sc:
-    num_channels = inputs.get_shape()[-1].value
+    num_channels = inputs.get_shape()[-1]
     beta = tf.Variable(tf.constant(0.0, shape=[num_channels]),
                        name='beta', trainable=True)
     gamma = tf.Variable(tf.constant(1.0, shape=[num_channels]),
@@ -866,9 +867,9 @@ def get_edge_feature(point_cloud, nn_idx, k=20):
   point_cloud_central = point_cloud
 
   point_cloud_shape = point_cloud.get_shape()
-  batch_size = point_cloud_shape[0].value
-  num_points = point_cloud_shape[1].value
-  num_dims = point_cloud_shape[2].value
+  batch_size = point_cloud_shape[0]
+  num_points = point_cloud_shape[1]
+  num_dims = point_cloud_shape[2]
 
   idx_ = tf.range(batch_size) * num_points
   idx_ = tf.reshape(idx_, [batch_size, 1, 1]) 
