@@ -14,6 +14,7 @@ import argparse
 import socket
 import importlib
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # reduce tf spam
 import scipy.misc
 import sys
 from matplotlib import pyplot as plt
