@@ -3,7 +3,7 @@ The classifier of linked dynamic graph CNN.
 @author: Kuangen Zhang
 
 """
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import numpy as np
 import sys
 import os
