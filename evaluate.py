@@ -8,6 +8,7 @@ Reference code: https://github.com/WangYueFt/dgcnn
 
 """
 import tensorflow.compat.v1 as tf
+tf.disable_eager_execution()
 import numpy as np
 import argparse
 import socket
