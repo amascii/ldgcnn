@@ -168,22 +168,25 @@ with tf.Session(config=config) as sess:
                 # Calculate the loss and classification scores.
                 loss_val, pred_val = sess.run([ops['loss'], ops['pred']],
                                           feed_dict=feed_dict)
-                print('some stuff coming up:')
-                print(loss_val)
-                print(pred_val)
+                #print('some stuff coming up:')
+                #print(loss_val)
+                #print(pred_val)
+                #pred_labels = np.argmax(pred_val, 1)
+                #batch_pred_sum += pred_val
+                #batch_pred_val = np.argmax(pred_val, 1)
+                #print(batch_pred_val)
+                #for el_idx in range(cur_batch_size):
+                #    batch_pred_classes[el_idx, batch_pred_val[el_idx]] += 1
                 
-                batch_pred_sum += pred_val
-                batch_pred_val = np.argmax(pred_val, 1)
-                for el_idx in range(cur_batch_size):
-                    batch_pred_classes[el_idx, batch_pred_val[el_idx]] += 1
                 batch_loss_sum += (loss_val * cur_batch_size)
                 # pred_val_topk = np.argsort(batch_pred_sum, axis=-1)[:,-1*np.array(range(topk))-1]
-                pred_val = np.argmax(batch_pred_sum, 1)
+                pred_val = np.argmax(pred_val, 1)
+                print(pred_val)
                 # Aggregating end
                 
-                
-
                 correct = np.sum(pred_val == current_label[start_idx:end_idx])
+                print(current_label[start_idx:end_idx])
+                print(f'correct: {correct}')
                 # correct = np.sum(pred_val_topk[:,0:topk] == label_val)
                 total_correct += correct
                 total_seen += cur_batch_size
